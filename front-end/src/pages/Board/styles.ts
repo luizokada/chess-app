@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 interface SquareProps {
     image: string;
+    background: string;
 }
 export const Container = styled.div`
     width: 100%;
@@ -11,20 +12,7 @@ export const Container = styled.div`
     margin: auto;
 `;
 
-export const BlackSquare = styled.div<SquareProps>`
-    width: 100px;
-    height: 100px;
-    background-color: green;
-    background-image: url(${(props) => props.image});
-    border: 0.5px black solid;
-    background-size: 100%;
-    cursor: ${(props) => (props.image !== '' ? 'pointer' : '')};
-    display: flex;
-    justify-content: center;
-    align-items: center;
-`;
-
-export const WhiteSquare = styled.div<SquareProps>`
+export const Square = styled.div<SquareProps>`
     width: 100px;
     height: 100px;
     background-size: 100%;
@@ -35,6 +23,7 @@ export const WhiteSquare = styled.div<SquareProps>`
     background-image: url(${(props) => props.image});
     border: 0.5px black solid;
     cursor: ${(props) => (props.image !== '' ? 'pointer' : '')};
+    background-color: ${(props) => props.background};
 `;
 
 export const MovementDot = styled.div`

@@ -7,7 +7,7 @@ import { Piece } from './Piece';
 import { Queen } from './Queen';
 import { Rook } from './Rook';
 
-export const initBoart = (): Piece[][] => {
+export const initBoard = (): Piece[][] => {
     let matrix: Piece[][] = [];
     for (let i = 0; i < 8; i++) {
         matrix[i] = [
@@ -159,4 +159,18 @@ export const initBoart = (): Piece[][] => {
         }
     }
     return matrix;
+};
+
+export const isCordenateValid = (i: number, j: number): boolean => {
+    return i >= 0 && i < 8 && j >= 0 && j < 8;
+};
+
+export const getSquareColor = (i: number, j: number): string => {
+    return i % 2 === 0
+        ? j % 2 === 0
+            ? 'green'
+            : 'white'
+        : j % 2 === 0
+        ? 'white'
+        : 'green';
 };

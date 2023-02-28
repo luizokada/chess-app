@@ -1,62 +1,66 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
-import { BlackSquare, Container, MovementDot, WhiteSquare } from './styles';
+import { useCallback, useEffect, useState } from 'react';
+import { Container, MovementDot, Square } from './styles';
 import { Piece } from '../../utils/Piece';
-import { initBoart } from '../../utils/InitBoard';
+import {
+    getSquareColor,
+    initBoard,
+    isCordenateValid,
+} from '../../utils/BoardFunctions';
 
 const Board: React.FC = () => {
     const [board, setBoard] = useState<Array<Array<Piece>>>([[]]);
     useEffect(() => {
-        setBoard(initBoart());
+        setBoard(initBoard());
     }, []);
 
-    const handleMovement = React.useCallback(
+    const resetMovementSquaresOnBoard = useCallback(() => {
+        setBoard((prev) => {
+            const oldState = [...prev];
+            oldState.forEach((row) => {
+                row.forEach((square) => {
+                    square.isMovement = false;
+                });
+            });
+            return oldState;
+        });
+    }, [board, setBoard]);
+
+    const handleMovement = useCallback(
         (i: number, j: number) => {
             const piece = board[i][j];
             piece.moves.forEach((cord) => {
                 setBoard((prev) => {
                     const oldState = [...prev];
-                    oldState[cord[0]][cord[1]].isMovement = true;
+                    if (isCordenateValid(cord[0], cord[1])) {
+                        oldState[cord[0]][cord[1]].isMovement = true;
+                    }
                     return oldState;
                 });
             });
         },
-        [board],
+        [board, setBoard],
     );
 
     return (
         <Container>
             {board.map((row, i) => {
                 return row.map((square, j) => {
-                    if (i % 2 !== 0) {
-                        return j % 2 === 0 ? (
-                            <BlackSquare key={j} image={square.image}>
-                                {square.isMovement && (
-                                    <MovementDot></MovementDot>
-                                )}
-                            </BlackSquare>
-                        ) : (
-                            <WhiteSquare key={j} image={square.image}>
-                                {square.isMovement && (
-                                    <MovementDot></MovementDot>
-                                )}
-                            </WhiteSquare>
-                        );
-                    } else {
-                        return j % 2 === 0 ? (
-                            <WhiteSquare key={j} image={square.image}>
-                                {square.isMovement && (
-                                    <MovementDot></MovementDot>
-                                )}
-                            </WhiteSquare>
-                        ) : (
-                            <BlackSquare key={j} image={square.image}>
-                                {square.isMovement && (
-                                    <MovementDot></MovementDot>
-                                )}
-                            </BlackSquare>
-                        );
-                    }
+                    return (
+                        <Square
+                            onClick={() => {
+                                resetMovementSquaresOnBoard();
+                                if (square.image !== '') {
+                                    handleMovement(i, j);
+                                }
+                            }}
+                            image={square.image}
+                            key={j}
+                            background={getSquareColor(i, j)}
+                        >
+                            {square.isMovement && <MovementDot></MovementDot>}
+                        </Square>
+                    );
                 });
             })}
         </Container>
