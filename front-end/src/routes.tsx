@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { BrowserRouter } from 'react-router-dom';
-import Board from './pages/Board/indext';
+import Board from './pages/Board';
 
 type RouteArrayProps = {
     path: string;
