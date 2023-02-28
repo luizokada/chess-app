@@ -28,7 +28,7 @@ export class Pawn extends Piece {
     private calcMovement() {
         if (this._cord !== undefined) {
             this.moves = [];
-            let move = this.color === Colors.WHITE ? -1 : 1;
+            let move = this.color === Colors.WHITE ? 1 : -1;
             this.moves.push([this._cord.i + move, this._cord.j]);
             if (this._cord.i === 6 || this._cord.i === 1) {
                 this.moves.push([this._cord.i + move * 2, this._cord.j]);

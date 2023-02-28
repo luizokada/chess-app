@@ -29,10 +29,15 @@ export class King extends Piece {
     private calcMovement() {
         if (this._cord !== undefined) {
             this.moves = [];
-            for (let k = 0; k < 8; k++) {
-                this.moves.push([this._cord.i, k]);
-                this.moves.push([k, this._cord.j]);
-            }
+
+            this.moves.push([this._cord.i + 1, this._cord.j + 1]);
+            this.moves.push([this._cord.i + 1, this._cord.j - 1]);
+            this.moves.push([this._cord.i - 1, this._cord.j - 1]);
+            this.moves.push([this._cord.i - 1, this._cord.j + 1]);
+            this.moves.push([this._cord.i, this._cord.j - 1]);
+            this.moves.push([this._cord.i, this._cord.j + 1]);
+            this.moves.push([this._cord.i - 1, this._cord.j]);
+            this.moves.push([this._cord.i + 1, this._cord.j]);
         }
     }
 }
