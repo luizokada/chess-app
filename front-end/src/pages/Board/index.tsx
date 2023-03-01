@@ -77,10 +77,6 @@ const Board: React.FC = () => {
         [board, setBoard],
     );
 
-    useEffect(() => {
-        console.log(board);
-    }, [board]);
-
     return (
         <Container>
             {board.map((row, i) => {
