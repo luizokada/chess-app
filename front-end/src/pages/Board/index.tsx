@@ -37,21 +37,49 @@ const Board: React.FC = () => {
 
     const handleMovement = useCallback(
         (i: number, j: number) => {
-            const piece = board[i][j];
-            currentPiece.current = piece;
-            console.log(piece);
-            piece.moves.forEach((cord) => {
-                setBoard((prev) => {
-                    const oldState = [...prev];
-                    if (isCordenateValid(cord[0], cord[1])) {
-                        oldState[cord[0]][cord[1]].isMovement = true;
-                    }
-                    return oldState;
+            resetMovementSquaresOnBoard();
+            if (currentPiece.current === null || currentPiece === null) {
+                const piece = board[i][j];
+                currentPiece.current = piece;
+                piece.moves.forEach((cord) => {
+                    setBoard((prev) => {
+                        const oldState = [...prev];
+                        if (isCordenateValid(cord[0], cord[1])) {
+                            oldState[cord[0]][cord[1]].isMovement = true;
+                        }
+                        return oldState;
+                    });
                 });
-            });
+            } else if (board[i][j].isMovement) {
+                const piece = currentPiece.current;
+                const pieceConstructor = piece.constructor as any;
+                setBoard((prev) => {
+                    if (piece._cord) {
+                        const oldState = [...prev];
+
+                        oldState[i][j] = new pieceConstructor(piece.color, {
+                            i,
+                            j,
+                        });
+                        oldState[piece?._cord.i][piece?._cord.j] = new Piece(
+                            '',
+                        );
+
+                        return oldState;
+                    }
+                    return prev;
+                });
+                currentPiece.current = null;
+            } else {
+                currentPiece.current = null;
+            }
         },
         [board, setBoard],
     );
+
+    useEffect(() => {
+        console.log(board);
+    }, [board]);
 
     return (
         <Container>
@@ -60,9 +88,9 @@ const Board: React.FC = () => {
                     return (
                         <Square
                             onClick={() => {
-                                resetMovementSquaresOnBoard();
-                                if (square.image !== '') {
-                                    handleMovement(i, j);
+                                handleMovement(i, j);
+                                if (square.image === '') {
+                                    currentPiece.current = null;
                                 }
                             }}
                             image={square.image}

@@ -10,4 +10,12 @@ export class Piece {
     constructor(image: string) {
         this.image = image;
     }
+
+    set i(i: number) {
+        return;
+    }
+
+    set j(j: number) {
+        return;
+    }
 }
