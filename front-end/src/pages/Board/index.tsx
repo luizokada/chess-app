@@ -1,6 +1,13 @@
 import * as React from 'react';
-import { useCallback, useEffect, useState } from 'react';
-import { Container, MovementDot, Square } from './styles';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+    Bar,
+    Circle,
+    Container,
+    MovementDot,
+    ProhibitionSign,
+    Square,
+} from './styles';
 import { Piece } from '../../utils/Piece';
 import {
     getSquareColor,
@@ -10,6 +17,8 @@ import {
 
 const Board: React.FC = () => {
     const [board, setBoard] = useState<Array<Array<Piece>>>([[]]);
+    const currentPiece = useRef<Piece | null>(null);
+
     useEffect(() => {
         setBoard(initBoard());
     }, []);
@@ -29,6 +38,8 @@ const Board: React.FC = () => {
     const handleMovement = useCallback(
         (i: number, j: number) => {
             const piece = board[i][j];
+            currentPiece.current = piece;
+            console.log(piece);
             piece.moves.forEach((cord) => {
                 setBoard((prev) => {
                     const oldState = [...prev];
@@ -58,7 +69,19 @@ const Board: React.FC = () => {
                             key={j}
                             background={getSquareColor(i, j)}
                         >
-                            {square.isMovement && <MovementDot></MovementDot>}
+                            {square.isMovement &&
+                                (square.image === '' ? (
+                                    <MovementDot></MovementDot>
+                                ) : square.color ===
+                                  currentPiece.current?.color ? (
+                                    <ProhibitionSign>
+                                        <Circle>
+                                            <Bar />
+                                        </Circle>
+                                    </ProhibitionSign>
+                                ) : (
+                                    <MovementDot></MovementDot>
+                                ))}
                         </Square>
                     );
                 });

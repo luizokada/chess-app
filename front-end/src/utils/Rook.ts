@@ -30,8 +30,12 @@ export class Rook extends Piece {
         if (this._cord !== undefined) {
             this.moves = [];
             for (let k = 0; k < 8; k++) {
-                this.moves.push([this._cord.i, k]);
-                this.moves.push([k, this._cord.j]);
+                if (k !== this._cord.j) {
+                    this.moves.push([this._cord.i, k]);
+                }
+                if (k !== this._cord.i) {
+                    this.moves.push([k, this._cord.j]);
+                }
             }
         }
     }

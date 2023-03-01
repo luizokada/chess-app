@@ -6,9 +6,9 @@ import { Cord } from '../types/Cord';
 
 export class Queen extends Piece {
     constructor(color: Colors, cord: Cord) {
-        super(color);
+        super(color === Colors.WHITE ? whiteQueen : blackQueen);
+        this.color = color;
         this._cord = cord;
-        this.image = color === Colors.WHITE ? whiteQueen : blackQueen;
         this.calcMovement();
     }
 
@@ -28,17 +28,26 @@ export class Queen extends Piece {
 
     private calcMovement() {
         if (this._cord !== undefined) {
-            this.moves = [];
-            for (let k = 0; k < 8; k++) {
-                this.moves.push([this._cord.i, k]);
-                this.moves.push([k, this._cord.j]);
+            const moves = [];
+            for (let k = 1; k < 8; k++) {
+                moves.push([this._cord.i + k, this._cord.j + k]);
+                moves.push([this._cord.i - k, this._cord.j - k]);
+                moves.push([this._cord.i + k, this._cord.j - k]);
+                moves.push([this._cord.i - k, this._cord.j + k]);
             }
             for (let k = 0; k < 8; k++) {
-                this.moves.push([this._cord.i + k, this._cord.j + k]);
-                this.moves.push([this._cord.i - k, this._cord.j - k]);
-                this.moves.push([this._cord.i + k, this._cord.j - k]);
-                this.moves.push([this._cord.i - k, this._cord.j + k]);
+                if (k !== this._cord.j) {
+                    moves.push([this._cord.i, k]);
+                }
+                if (k !== this._cord.i) {
+                    moves.push([k, this._cord.j]);
+                }
             }
+            this.moves = moves.filter((move) => {
+                return (
+                    move[0] >= 0 && move[0] < 8 && move[1] >= 0 && move[1] < 8
+                );
+            });
         }
     }
 }

@@ -33,3 +33,31 @@ export const MovementDot = styled.div`
     opacity: 0.5;
     border-radius: 50%;
 `;
+
+export const Circle = styled.div`
+    width: 50px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    height: 50px;
+    border-radius: 50%;
+    background-color: transparent;
+    border: 4px solid black;
+    opacity: 0.5;
+`;
+
+export const Bar = styled.div`
+    width: 100%;
+    height: 4px;
+    background-color: black;
+    transform: rotate(45deg);
+`;
+
+export const ProhibitionSign = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+    position: relative;
+`;

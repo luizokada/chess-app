@@ -28,15 +28,22 @@ export class Knight extends Piece {
 
     private calcMovement() {
         if (this._cord! !== undefined) {
-            this.moves = [];
-            this.moves.push([this._cord.i - 2, this._cord.j - 1]);
-            this.moves.push([this._cord.i - 2, this._cord.j + 1]);
-            this.moves.push([this._cord.i + 2, this._cord.j - 1]);
-            this.moves.push([this._cord.i + 2, this._cord.j + 1]);
-            this.moves.push([this._cord.i - 1, this._cord.j - 2]);
-            this.moves.push([this._cord.i - 1, this._cord.j + 2]);
-            this.moves.push([this._cord.i + 1, this._cord.j - 2]);
-            this.moves.push([this._cord.i + 1, this._cord.j + 2]);
+            const moves = [];
+
+            moves.push([this._cord.i - 2, this._cord.j - 1]);
+            moves.push([this._cord.i - 2, this._cord.j + 1]);
+            moves.push([this._cord.i + 2, this._cord.j - 1]);
+            moves.push([this._cord.i + 2, this._cord.j + 1]);
+            moves.push([this._cord.i - 1, this._cord.j - 2]);
+            moves.push([this._cord.i - 1, this._cord.j + 2]);
+            moves.push([this._cord.i + 1, this._cord.j - 2]);
+            moves.push([this._cord.i + 1, this._cord.j + 2]);
+
+            this.moves = moves.filter((move) => {
+                return (
+                    move[0] >= 0 && move[0] < 8 && move[1] >= 0 && move[1] < 8
+                );
+            });
         }
     }
 }
