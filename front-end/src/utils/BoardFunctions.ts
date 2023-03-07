@@ -18,7 +18,7 @@ export const initBoard = (): Piece[][] => {
             new Piece(Colors.EMPTY),
             new Piece(Colors.EMPTY),
             new Piece(Colors.EMPTY),
-            new Piece(Colors.EMPTY)
+            new Piece(Colors.EMPTY),
         ];
         for (let j = 0; j < 8; j++) {
             if (i === 0 || i === 7) {
