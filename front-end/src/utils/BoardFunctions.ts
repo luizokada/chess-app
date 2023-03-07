@@ -11,62 +11,14 @@ export const initBoard = (): Piece[][] => {
     let matrix: Piece[][] = [];
     for (let i = 0; i < 8; i++) {
         matrix[i] = [
-            {
-                image: '',
-                color: undefined,
-                moves: [],
-                isMovement: false,
-                _cord: undefined,
-            },
-            {
-                image: '',
-                color: undefined,
-                moves: [],
-                isMovement: false,
-                _cord: undefined,
-            },
-            {
-                image: '',
-                color: undefined,
-                moves: [],
-                isMovement: false,
-                _cord: undefined,
-            },
-            {
-                image: '',
-                color: undefined,
-                moves: [],
-                isMovement: false,
-                _cord: undefined,
-            },
-            {
-                image: '',
-                color: undefined,
-                moves: [],
-                isMovement: false,
-                _cord: undefined,
-            },
-            {
-                image: '',
-                color: undefined,
-                moves: [],
-                isMovement: false,
-                _cord: undefined,
-            },
-            {
-                image: '',
-                color: undefined,
-                moves: [],
-                isMovement: false,
-                _cord: undefined,
-            },
-            {
-                image: '',
-                color: undefined,
-                moves: [],
-                isMovement: false,
-                _cord: undefined,
-            },
+            new Piece(Colors.EMPTY),
+            new Piece(Colors.EMPTY),
+            new Piece(Colors.EMPTY),
+            new Piece(Colors.EMPTY),
+            new Piece(Colors.EMPTY),
+            new Piece(Colors.EMPTY),
+            new Piece(Colors.EMPTY),
+            new Piece(Colors.EMPTY)
         ];
         for (let j = 0; j < 8; j++) {
             if (i === 0 || i === 7) {
