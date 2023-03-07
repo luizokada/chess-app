@@ -3,12 +3,14 @@ import whitePawn from '../assets/icons/whitePanw.png';
 import blackPawn from '../assets/icons/blackPanw.png';
 import { Colors } from '../types/Colors';
 import { Cord } from '../types/Cord';
+import { Pieces } from '../types/Pieces';
 
 export class Pawn extends Piece {
     constructor(color: Colors, cord: Cord) {
         super(color === Colors.WHITE ? whitePawn : blackPawn);
         this.color = color;
         this._cord = cord;
+        this.type = Pieces.PAWN;
         this.calcMovement();
     }
     public set i(i: number) {

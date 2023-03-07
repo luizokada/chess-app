@@ -3,12 +3,14 @@ import blackRook from '../assets/icons/blackRook.png';
 import { Colors } from '../types/Colors';
 import { Piece } from './Piece';
 import { Cord } from '../types/Cord';
+import { Pieces } from '../types/Pieces';
 
 export class Rook extends Piece {
     constructor(color: Colors, cord: Cord) {
         super(color === Colors.WHITE ? whiteRook : blackRook);
         this._cord = cord;
         this.color = color;
+        this.type = Pieces.ROOK;
         this.calcMovement();
     }
 

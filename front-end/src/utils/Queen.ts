@@ -3,12 +3,14 @@ import { Piece } from './Piece';
 import whiteQueen from '../assets/icons/whiteQueen.png';
 import blackQueen from '../assets/icons/blackQueen.png';
 import { Cord } from '../types/Cord';
+import { Pieces } from '../types/Pieces';
 
 export class Queen extends Piece {
     constructor(color: Colors, cord: Cord) {
         super(color === Colors.WHITE ? whiteQueen : blackQueen);
         this.color = color;
         this._cord = cord;
+        this.type = Pieces.QUEEN;
         this.calcMovement();
     }
 

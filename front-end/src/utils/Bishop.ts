@@ -4,12 +4,14 @@ import whiteBishop from '../assets/icons/whiteBishop.png';
 import blackBishop from '../assets/icons/blackBishop.png';
 import { Cord } from '../types/Cord';
 import { isCordenateValid } from './BoardFunctions';
+import { Pieces } from '../types/Pieces';
 
 export class Bishop extends Piece {
     constructor(color: Colors, cord: Cord) {
         super(color === Colors.WHITE ? whiteBishop : blackBishop);
         this.color = color;
         this._cord = cord;
+        this.type = Pieces.BISHOP;
         this.calcMovement();
     }
 
