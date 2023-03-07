@@ -14,6 +14,8 @@ import {
     initBoard,
     isCordenateValid,
 } from '../../utils/BoardFunctions';
+import { Pieces } from '../../types/Pieces';
+import { Cord } from '../../types/Cord';
 
 const Board: React.FC = () => {
     const [board, setBoard] = useState<Array<Array<Piece>>>([[]]);
@@ -35,6 +37,34 @@ const Board: React.FC = () => {
         });
     }, [board, setBoard]);
 
+    const isMoventValid = useCallback(
+        (pieceType: Pieces | undefined, cord: Cord, piece: Piece) => {
+            switch (pieceType) {
+                case Pieces.PAWN:
+                    break;
+                case Pieces.ROOK:
+                    break;
+                case Pieces.KNIGHT:
+                    if (
+                        board[cord.i][cord.j].image === '' ||
+                        piece.color !== board[cord.i][cord.j].color
+                    ) {
+                        return true;
+                    }
+                    return false;
+                case Pieces.BISHOP:
+                    break;
+                case Pieces.QUEEN:
+                    break;
+                case Pieces.KING:
+                    break;
+                default:
+                    return false;
+            }
+        },
+        [board, setBoard],
+    );
+
     const handleMovement = useCallback(
         (i: number, j: number) => {
             resetMovementSquaresOnBoard();
@@ -53,22 +83,23 @@ const Board: React.FC = () => {
             } else if (board[i][j].isMovement) {
                 const piece = currentPiece.current;
                 const pieceConstructor = piece.constructor as any;
-                setBoard((prev) => {
-                    if (piece._cord) {
-                        const oldState = [...prev];
+                if (isMoventValid(piece.type, { i, j }, piece)) {
+                    setBoard((prev) => {
+                        if (piece._cord) {
+                            const oldState = [...prev];
 
-                        oldState[i][j] = new pieceConstructor(piece.color, {
-                            i,
-                            j,
-                        });
-                        oldState[piece?._cord.i][piece?._cord.j] = new Piece(
-                            '',
-                        );
+                            oldState[i][j] = new pieceConstructor(piece.color, {
+                                i,
+                                j,
+                            });
+                            oldState[piece?._cord.i][piece?._cord.j] =
+                                new Piece('');
 
-                        return oldState;
-                    }
-                    return prev;
-                });
+                            return oldState;
+                        }
+                        return prev;
+                    });
+                }
                 currentPiece.current = null;
             } else {
                 currentPiece.current = null;
