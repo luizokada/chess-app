@@ -16,6 +16,7 @@ import {
 } from '../../utils/BoardFunctions';
 import { Pieces } from '../../types/Pieces';
 import { Cord } from '../../types/Cord';
+import { ValidateMoves } from '../../utils/ValidateMoves';
 
 const Board: React.FC = () => {
     const [board, setBoard] = useState<Array<Array<Piece>>>([[]]);
@@ -39,19 +40,15 @@ const Board: React.FC = () => {
 
     const isMoventValid = useCallback(
         (pieceType: Pieces | undefined, cord: Cord, piece: Piece) => {
+            const validator = new ValidateMoves();
             switch (pieceType) {
                 case Pieces.PAWN:
+                    return validator.validatePawnMoves(cord, board, piece);
                     break;
                 case Pieces.ROOK:
                     break;
                 case Pieces.KNIGHT:
-                    if (
-                        board[cord.i][cord.j].image === '' ||
-                        piece.color !== board[cord.i][cord.j].color
-                    ) {
-                        return true;
-                    }
-                    return false;
+                    return validator.validateKnightMoves(cord, board, piece);
                 case Pieces.BISHOP:
                     break;
                 case Pieces.QUEEN:
